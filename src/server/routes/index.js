@@ -1,6 +1,19 @@
 const router = require('express').Router();
 const contacts = require('./contacts')
+const auth = require('./auth')
 const DbContacts = require('../../db/contacts');
+
+router.use('/auth', auth)
+router.get('/login', (request, response) => {
+  response.render('login', {warning: ''})
+})
+
+router.get('/signup', (request, response) => {
+  response.render('signup', {warning: ''})
+})
+
+
+router.use('/contacts', contacts); // /contacts/search
 
 router.get('/', (request, response) => {
   DbContacts.getContacts()
@@ -8,6 +21,5 @@ router.get('/', (request, response) => {
     .catch( err => console.log('err', err) )
 })
 
-router.use('/contacts', contacts); // /contacts/search
 
 module.exports = router;

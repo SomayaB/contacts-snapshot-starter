@@ -1,0 +1,22 @@
+<%- include header.ejs %>
+
+  <h1>Login</h1>
+  <form method="POST" action="/auth/login">
+    <div>
+      <span>Username:</span>
+      <input type='text' name="username" placeholder="username"/>
+    </div>
+    <div>
+      <span>Password:</span>
+      <input type='text' name="password" placeholder="password"/>
+    </div>
+    <br>
+    <div>
+      <input type='submit' name="UserLogin"/>
+    </div>
+  </form>
+  <br>
+  <br>
+  <a href="/auth/signup">Signup</a>
+
+<%- include footer.ejs %>
