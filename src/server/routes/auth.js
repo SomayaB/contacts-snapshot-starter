@@ -1,6 +1,6 @@
 const db = require('../../db/users.js')
 const router = require('express').Router()
-const {renderError} = require('../utils')
+const {renderError, encryptPassword, comparePasswords} = require('../utils')
 
 router.get('/login', (request, response) => {
   response.render('login', {warning: ''})
@@ -11,17 +11,20 @@ router.get('/signup', (request, response) => {
 })
 
 router.post('/signup', (request, response) => {
-  const newUsername = request.body.username
-  const newPassword = request.body.password
+  const username = request.body.username
+  const password = request.body.password
   db.getAllUsers()
   .then(users => {
     users.forEach(function(user){
-      if(user.username === newUsername) {
+      if(user.username === username) {
         response.render('signup', {warning: 'This username is already taken.'})
       }
     })
     console.log('got here?');
-    db.addNewUser(newUsername, newPassword)
+    encryptPassword(password)
+    .then(hash => {
+      db.addNewUser(username, hash)
+    })
     response.redirect('/') // eventually render the home page
   })
   .catch(error => console.log(error))
