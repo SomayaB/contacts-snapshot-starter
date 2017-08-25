@@ -62,5 +62,10 @@ router.post('/login', (request, response) => {
   })
 })
 
+router.get('/logout', (request, response) => {
+  request.session.destroy()
+  response.redirect('/auth/login')
+})
+
 
 module.exports = router;

@@ -102,3 +102,8 @@ nav .search-form input {
 .form-errors {
   color: red;
 }
+
+.logout-btn {
+  float: right;
+  
+}
