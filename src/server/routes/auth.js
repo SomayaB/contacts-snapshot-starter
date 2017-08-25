@@ -10,24 +10,27 @@ router.get('/signup', (request, response) => {
   response.render('signup', {warning: ''})
 })
 
-router.post('/signup', (request, response) => {
+router.post('/signup', (request, response, next) => {
   const username = request.body.username
   const password = request.body.password
-  db.getAllUsers()
-  .then(users => {
-    users.forEach(function(user){
-      if(user.username === username) {
+  if(username.length === 0 || password.length === 0){
+    response.render('signup', {warning: 'You must enter a username and a password.'})
+  } else {
+    db.getUserInfo(username)
+    .then(user => {
+      if (user.length > 0){
         response.render('signup', {warning: 'This username is already taken.'})
+      } else {
+        console.log('got here?');
+        encryptPassword(password)
+        .then(hash => {
+          db.addNewUser(username, hash)
+        })
+        response.redirect('/') //Works but Error: cant set headers after they’re set.
       }
     })
-    console.log('got here?');
-    encryptPassword(password)
-    .then(hash => {
-      db.addNewUser(username, hash)
-    })
-    response.redirect('/') // eventually render the home page
-  })
-  .catch(error => console.log(error))
+    .catch(error => console.log(error))
+  }
 })
 
 router.post('/login', (request, response) => {
