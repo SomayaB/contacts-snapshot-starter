@@ -22,25 +22,26 @@ router.post('/signup', (request, response) => {
     })
     console.log('got here?');
     db.addNewUser(newUsername, newPassword)
-    response.send('you signed up successfully!') // eventually render the home page
+    response.redirect('/') // eventually render the home page
   })
   .catch(error => console.log(error))
 })
 
 router.post('/login', (request, response) => {
-  console.log(request.body)
-  db.getUserInfo(request.body.username)
-  .then(userInfo => {
-    console.log(userInfo);
+  const username = request.body.username
+  const password = request.body.password
+  console.log(username);
+  db.getUserInfo(username)
+  .then(user => {
+    if(user.length < 1) { //checks for empty object. wrong username. Doesn't check for password match yet. will check with bcrypt comapre.
+      response.render('login', {warning: 'Incorrect username or password'})
+    } else {
+    response.redirect('/') //maybe index instead
+    }
   })
   .catch(error => {
-    console.log('error::', error);
+    renderError(error, response, response)
   })
-    //   .then( user => {
-    //       if (user) console.log('user exists')
-    //       else response.render('login', {warning: 'Incorrect username or password'})
-    //     })
-    // .catch( error => renderError(error, response, response) )
 })
 
 
