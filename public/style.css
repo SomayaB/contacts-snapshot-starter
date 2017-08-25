@@ -6,13 +6,9 @@ html, body{
   font-size: 16px;
 }
 
-html,
-button,
-input,
-optgroup,
-select,
-textarea {
-  font-family: monospace;
+html {
+  font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+;
 }
 
 
@@ -105,5 +101,19 @@ nav .search-form input {
 
 .logout-btn {
   float: right;
-  
+
+}
+
+form label {
+    display: block;
+    margin-bottom: 1em;
+}
+
+.form label > span {
+  display: inline-block;
+  min-width: 8em;
+}
+
+.form input[type="submit"] {
+  margin-top: 1em;
 }

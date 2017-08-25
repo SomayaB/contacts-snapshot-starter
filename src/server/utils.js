@@ -15,7 +15,6 @@ const renderError = function(error, response, response){
 }
 
 const createSession = (request, response, user) => {
-  console.log(request.session);
   request.session.user = user
 }
 

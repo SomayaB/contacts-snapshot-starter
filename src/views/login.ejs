@@ -1,16 +1,17 @@
 <%- include header.ejs %>
 
   <h1>Login</h1>
+
   <form method="POST" action="/auth/login">
     <pre class="form-errors"> <%=warning %> </pre>
-    <div>
+    <label>
       <span>Username:</span>
       <input type='text' name="username" placeholder="username"/>
-    </div>
-    <div>
-      <span>Password:</span>
+    </label>
+    <label>
+      <span>Password: </span>
       <input type="password"name="password" placeholder="password"/>
-    </div>
+    </label>
     <br>
     <div>
       <input type='submit' value="Login"/>

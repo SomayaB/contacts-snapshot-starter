@@ -42,7 +42,6 @@ router.post('/login', (request, response) => {
   const password = request.body.password
   db.getUserInfo(username)
   .then(user => {
-    console.log('user::', user[0]);
     if(user.length < 1) {
       response.render('login', {warning: 'Incorrect username or password'})
     } else {

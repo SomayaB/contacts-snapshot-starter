@@ -4,14 +4,18 @@ const auth = require('./auth')
 const DbContacts = require('../../db/contacts');
 
 router.use('/auth', auth)
-router.get('/login', (request, response) => {
-  response.render('login', {warning: ''})
-})
 
-router.get('/signup', (request, response) => {
-  response.render('signup', {warning: ''})
-})
 
+const isLoggedIn = (request, response, next) => {
+  if (!request.session.user) {
+    response.redirect('/auth/login')
+  } else {
+    response.locals.isLoggedIn = true
+    next()
+  }
+}
+
+router.use(isLoggedIn)
 
 router.use('/contacts', contacts); // /contacts/search
 
