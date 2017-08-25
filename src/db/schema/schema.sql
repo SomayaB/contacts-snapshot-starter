@@ -10,5 +10,6 @@ CREATE TABLE contacts (
 CREATE TABLE users (
   id serial,
   username varchar(255) NOT NULL UNIQUE,
-  password varchar(255) NOT NULL
+  password varchar(255) NOT NULL,
+  role VARCHAR(20) DEFAULT 'regular'
 );

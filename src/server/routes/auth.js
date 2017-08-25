@@ -21,12 +21,10 @@ router.post('/signup', (request, response, next) => {
       if (user.length > 0){
         response.render('signup', {warning: 'This username is already taken.'})
       } else {
-        console.log('got here?');
         encryptPassword(password)
         .then(hash => {
           db.addNewUser(username, hash)
           .then(userInfo => {
-            console.log('userinfo::', userInfo);
             createSession(request, response, userInfo)
             response.redirect('/')
           })

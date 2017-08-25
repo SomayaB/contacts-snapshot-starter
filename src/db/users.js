@@ -1,17 +1,17 @@
 const db = require('./db')
 
-const getUserInfo = function(username){
+const getUserInfo = (username) => {
   return db.query(`
     SELECT
       *
     FROM
       users
     WHERE username=$1
-    `, [username])
+    `, username)
     .catch(error => error);
 }
 
-const addNewUser = function(username, password){
+const addNewUser = (username, password) => {
   return db.query(`
     INSERT INTO
       users (username, password)
@@ -24,12 +24,12 @@ const addNewUser = function(username, password){
     .catch(error => error);
 }
 
-const getAllUsers = function(){
-  return db.query(`SELECT * FROM users`)
+const getUserRole = (id) => {
+  return db.one(`SELECT role FROM users WHERE id=$1`, id)
 }
 
 module.exports = {
   getUserInfo,
   addNewUser,
-  getAllUsers
+  getUserRole
 }
