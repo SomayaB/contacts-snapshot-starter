@@ -14,8 +14,14 @@ const renderError = function(error, response, response){
   response.send(`ERROR: ${error.message}\n\n${error.stack}`)
 }
 
+const createSession = (request, response, user) => {
+  console.log(request.session);
+  request.session.user = user
+}
+
 module.exports = {
   renderError,
   encryptPassword,
-  comparePasswords
+  comparePasswords,
+  createSession
 }
