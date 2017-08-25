@@ -33,13 +33,19 @@ router.post('/signup', (request, response) => {
 router.post('/login', (request, response) => {
   const username = request.body.username
   const password = request.body.password
-  console.log(username);
   db.getUserInfo(username)
   .then(user => {
-    if(user.length < 1) { //checks for empty object. wrong username. Doesn't check for password match yet. will check with bcrypt comapre.
+    if(user.length < 1) {
       response.render('login', {warning: 'Incorrect username or password'})
     } else {
-    response.redirect('/') //maybe index instead
+      comparePasswords(password, user[0].password)
+      .then(result => {
+        if(result) {
+          response.redirect('/')
+        } else {
+          response.render('login', {warning: 'Incorrect username or password'})
+        }
+      })
     }
   })
   .catch(error => {
