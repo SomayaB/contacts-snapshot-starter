@@ -1,12 +1,13 @@
 const db = require('./db')
 
-const getUserInfo = function(){
+const getUserInfo = function(username){
   return db.query(`
     SELECT
       *
     FROM
-      contacts
-    `, [])
+      users
+    WHERE username=$1
+    `, [username])
     .catch(error => error);
 }
 
@@ -23,8 +24,12 @@ const addNewUser = function(username, password){
     .catch(error => error);
 }
 
+const getAllUsers = function(){
+  return db.query(`SELECT * FROM users`)
+}
 
 module.exports = {
   getUserInfo,
-  addNewUser
+  addNewUser,
+  getAllUsers
 }
